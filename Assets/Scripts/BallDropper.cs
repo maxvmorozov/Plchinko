@@ -14,11 +14,21 @@ public class BallDropper : MonoBehaviour
         }
     }
 
-    public void DropBall()
+    private void DropBall()
     {
         Vector3 spawnPosition = GetSpawnPosition();
         
-        Instantiate(BallPrefab, spawnPosition, Quaternion.identity);
+       GameObject ball = Instantiate(BallPrefab, spawnPosition, Quaternion.identity);
+
+        AddRandomForce(ball);
+    }
+
+    private void AddRandomForce(GameObject ball)
+    {
+        Rigidbody2D rigidbody = ball.GetComponent<Rigidbody2D>();
+        
+        float randomHorizontalForce = Random.Range(-5.5f, 5.5f);
+        rigidbody.AddForce(new Vector2(randomHorizontalForce, 0f), ForceMode2D.Impulse);
     }
 
     private Vector3 GetSpawnPosition()
